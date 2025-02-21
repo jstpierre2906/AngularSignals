@@ -12,10 +12,11 @@ type Hero = { name: HeroName; currentlyFightsVillain: boolean };
 
 const villainNames = ['Joker', 'Penguin', 'Catwoman'] as const;
 type VillainName = (typeof villainNames)[number];
+type VillainDescription = 'evil' | 'most evil' | 'dangerous';
 type Villain = {
   name: VillainName;
   currentlyFightsHero: boolean;
-  description: 'evil' | 'most evil' | 'dangerous';
+  description: VillainDescription;
 };
 
 @Component({
