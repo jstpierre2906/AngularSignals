@@ -1,0 +1,18 @@
+#desc {
+  font-weight: bold;
+  font-style: italic;
+  border-bottom: 1px solid black;
+}
+#container {
+  display: flex;
+}
+.section {
+  margin-bottom: 1em;
+}
+.section.right {
+  border-left: 1px solid black;
+  padding-left: 1em;
+}
+.section [type="button"] {
+  margin-right: 1em;
+}
