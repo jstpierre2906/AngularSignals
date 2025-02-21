@@ -6,9 +6,12 @@ import {
   WritableSignal,
 } from '@angular/core';
 
-type HeroName = 'Batman' | 'Robin';
-type VillainName = 'Joker' | 'Penguin' | 'Catwoman';
+const heroNames = ['Batman', 'Robin'] as const;
+type HeroName = (typeof heroNames)[number];
 type Hero = { name: HeroName; currentlyFightsVillain: boolean };
+
+const villainNames = ['Joker', 'Penguin', 'Catwoman'] as const;
+type VillainName = typeof villainNames[number];
 type Villain = {
   name: VillainName;
   currentlyFightsHero: boolean;
@@ -62,6 +65,9 @@ export class AppComponent {
   }
 
   setHero(heroName: string) {
+    if (!this.heroNames.find((n) => n === heroName)) {
+      return;
+    }
     const activeHero: Hero = this.heroes
       .map((h) => {
         h.currentlyFightsVillain = false;
@@ -77,6 +83,9 @@ export class AppComponent {
   }
 
   setVillain(villainName: string) {
+    if (!this.villainNames.find((n) => n === villainName)) {
+      return;
+    }
     const activeVillain: Villain = this.villains
       .map((v) => {
         v.currentlyFightsHero = false;
