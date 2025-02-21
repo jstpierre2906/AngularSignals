@@ -3,13 +3,23 @@
   <div class="section">
     <p class="action-call">Set hero:</p>
     @for (h of heroNames; track h) {
-    <input type="button" value="{{ h }}" (click)="setHero(h)" />
+    <input
+      [disabled]="heroBtnDisabled(h)"
+      type="button"
+      value="{{ h }}"
+      (click)="setHero(h)"
+    />
     }
   </div>
   <div class="section right">
     <p class="action-call">Set villain:</p>
     @for (v of villainNames; track v) {
-    <input type="button" value="{{ v }}" (click)="setVillain(v)" />
+    <input
+      [disabled]="villainBtnDisabled(v)"
+      type="button"
+      value="{{ v }}"
+      (click)="setVillain(v)"
+    />
     }
     <div class="description">
       <p id="villain-desc">Active villain description:</p>

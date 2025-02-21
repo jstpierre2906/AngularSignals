@@ -11,7 +11,7 @@ type HeroName = (typeof heroNames)[number];
 type Hero = { name: HeroName; currentlyFightsVillain: boolean };
 
 const villainNames = ['Joker', 'Penguin', 'Catwoman'] as const;
-type VillainName = typeof villainNames[number];
+type VillainName = (typeof villainNames)[number];
 type Villain = {
   name: VillainName;
   currentlyFightsHero: boolean;
@@ -62,6 +62,24 @@ export class AppComponent {
 
   get villainNames(): string[] {
     return this.villains.map((v) => v.name);
+  }
+
+  heroBtnDisabled(heroName: string): boolean {
+    if (!this.heroNames.find((n) => n === heroName)) {
+      return false;
+    }
+    return !!this.heroes.find(
+      (h) => h.name === heroName && h.currentlyFightsVillain
+    );
+  }
+
+  villainBtnDisabled(villainName: string): boolean {
+    if (!this.villainNames.find((v) => v === villainName)) {
+      return false;
+    }
+    return !!this.villains.find(
+      (v) => v.name === villainName && v.currentlyFightsHero
+    );
   }
 
   setHero(heroName: string) {
