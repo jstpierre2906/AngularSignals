@@ -36,6 +36,7 @@ export class AppComponent {
   activeHero: WritableSignal<Hero>;
   activeVillain: WritableSignal<Villain>;
   actionDesc: Signal<string>;
+  robinAndCatwoman: Signal<string>;
 
   constructor() {
     this.activeHero = signal(
@@ -54,10 +55,19 @@ export class AppComponent {
           this.activeVillain().name
         }`
     );
+    this.robinAndCatwoman = computed(() => {
+      if (
+        this.activeHero().name === 'Robin' &&
+        this.activeVillain().name === 'Catwoman'
+      ) {
+        return '(Whoa! Did you see how Robin looks at Catwoman!?)';
+      }
+      return '';
+    });
   }
 
   get heroNames(): string[] {
-    return this.heroes.map((v) => v.name);
+    return this.heroes.map((h) => h.name);
   }
 
   get villainNames(): string[] {

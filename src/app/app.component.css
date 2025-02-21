@@ -32,3 +32,7 @@
 .section .description #villain-desc-list {
   margin-top: 0;
 }
+
+.section .description .robin-catwoman {
+  font-size: 0.7em;
+}

@@ -22,7 +22,9 @@
     />
     }
     <div class="description">
-      <p id="villain-desc"><b>{{ activeVillain().name }}</b> description:</p>
+      <p id="villain-desc">
+        <b>{{ activeVillain().name }}</b> description:
+      </p>
       <ul id="villain-desc-list">
         <li>name: {{ activeVillain().name }}</li>
         <li>
@@ -30,6 +32,7 @@
           }}{{ activeVillain().description.substring(1) }}
         </li>
       </ul>
+      <p class="robin-catwoman">{{ robinAndCatwoman() }}</p>
     </div>
   </div>
 </div>
