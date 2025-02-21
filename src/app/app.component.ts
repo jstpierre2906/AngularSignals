@@ -21,7 +21,6 @@ type Villain = {
   templateUrl: 'app.component.html',
 })
 export class AppComponent {
-  private readonly title: string = 'Étude sur les Signals';
   private readonly heroes: Hero[] = [
     { name: 'Batman', currentlyFightsVillain: true },
     { name: 'Robin', currentlyFightsVillain: false },

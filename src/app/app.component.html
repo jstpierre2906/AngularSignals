@@ -11,5 +11,15 @@
     @for (v of villainNames; track v) {
     <input type="button" value="{{ v }}" (click)="setVillain(v)" />
     }
+    <div class="description">
+      <p id="villain-desc">Active villain description:</p>
+      <ul id="villain-desc-list">
+        <li>name: {{ activeVillain().name }}</li>
+        <li>
+          desc: {{ activeVillain().description.substring(0, 1).toUpperCase()
+          }}{{ activeVillain().description.substring(1) }}
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

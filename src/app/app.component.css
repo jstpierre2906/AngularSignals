@@ -3,16 +3,32 @@
   font-style: italic;
   border-bottom: 1px solid black;
 }
+
 #container {
   display: flex;
 }
+
 .section {
   margin-bottom: 1em;
 }
+
 .section.right {
   border-left: 1px solid black;
   padding-left: 1em;
 }
+
 .section [type="button"] {
   margin-right: 1em;
+}
+
+.section .description {
+  font-size: 0.8em;
+}
+
+.section .description #villain-desc {
+  margin-bottom: 0;
+}
+
+.section .description #villain-desc-list {
+  margin-top: 0;
 }
