@@ -27,10 +27,7 @@
       </p>
       <ul id="villain-desc-list">
         <li>name: {{ activeVillain().name }}</li>
-        <li>
-          desc: {{ activeVillain().description.substring(0, 1).toUpperCase()
-          }}{{ activeVillain().description.substring(1) }}
-        </li>
+        <li>desc: {{ villainDescription }}</li>
       </ul>
       <p class="robin-catwoman">{{ robinAndCatwoman() }}</p>
     </div>

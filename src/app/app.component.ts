@@ -5,19 +5,7 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-
-const heroNames = ['Batman', 'Robin'] as const;
-type HeroName = (typeof heroNames)[number];
-type Hero = { name: HeroName; currentlyFightsVillain: boolean };
-
-const villainNames = ['Joker', 'Penguin', 'Catwoman'] as const;
-type VillainName = (typeof villainNames)[number];
-type VillainDescription = 'evil' | 'most evil' | 'dangerous';
-type Villain = {
-  name: VillainName;
-  currentlyFightsHero: boolean;
-  description: VillainDescription;
-};
+import { Hero, Villain } from './app.data';
 
 @Component({
   selector: 'app-root',
@@ -43,12 +31,12 @@ export class AppComponent {
     this.activeHero = signal(
       this.heroes
         .filter((h) => h.currentlyFightsVillain)
-        .reduce((acc, curr) => (acc = curr), {} as Hero)
+        .reduce((_acc, curr) => curr, {} as Hero)
     );
     this.activeVillain = signal(
       this.villains
         .filter((v) => v.currentlyFightsHero)
-        .reduce((acc, curr) => (acc = curr), {} as Villain)
+        .reduce((_acc, curr) => curr, {} as Villain)
     );
     this.actionDesc = computed(
       () =>
@@ -73,6 +61,12 @@ export class AppComponent {
 
   get villainNames(): string[] {
     return this.villains.map((v) => v.name);
+  }
+
+  get villainDescription(): string {
+    return `${this.activeVillain()
+      .description.substring(0, 1)
+      .toUpperCase()}${this.activeVillain().description.substring(1)}`;
   }
 
   heroBtnDisabled(heroName: string): boolean {
@@ -107,7 +101,7 @@ export class AppComponent {
         h.currentlyFightsVillain = true;
         return h;
       })
-      .reduce((acc, curr) => (acc = curr), {} as Hero);
+      .reduce((_acc, curr) => curr, {} as Hero);
     this.activeHero.set(activeHero);
   }
 
@@ -125,7 +119,7 @@ export class AppComponent {
         v.currentlyFightsHero = true;
         return v;
       })
-      .reduce((acc, curr) => (acc = curr), {} as Villain);
+      .reduce((_acc, curr) => curr, {} as Villain);
     this.activeVillain.set(activeVillain);
   }
 }
