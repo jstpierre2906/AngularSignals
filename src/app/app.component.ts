@@ -1,10 +1,4 @@
-import {
-  Component,
-  computed,
-  Signal,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, computed, effect, Signal, signal, WritableSignal } from '@angular/core';
 import { Hero, Villain } from './app.data';
 
 @Component({
@@ -14,8 +8,8 @@ import { Hero, Villain } from './app.data';
 })
 export class AppComponent {
   private readonly heroes: Hero[] = [
-    { name: 'Batman', currentlyFightsVillain: true },
-    { name: 'Robin', currentlyFightsVillain: false },
+    { name: 'Batman', currentlyFightsVillain: true, isInjured: false },
+    { name: 'Robin', currentlyFightsVillain: false, isInjured: false },
   ];
   private readonly villains: Villain[] = [
     { name: 'Joker', currentlyFightsHero: true, description: 'evil' },
@@ -29,30 +23,27 @@ export class AppComponent {
 
   constructor() {
     this.activeHero = signal(
-      this.heroes
-        .filter((h) => h.currentlyFightsVillain)
-        .reduce((_acc, curr) => curr, {} as Hero)
+      this.heroes.filter((h) => h.currentlyFightsVillain).reduce((_acc, curr) => curr, {} as Hero)
     );
     this.activeVillain = signal(
-      this.villains
-        .filter((v) => v.currentlyFightsHero)
-        .reduce((_acc, curr) => curr, {} as Villain)
+      this.villains.filter((v) => v.currentlyFightsHero).reduce((_acc, curr) => curr, {} as Villain)
     );
-    this.actionDesc = computed(
-      () =>
-        `${this.activeHero().name} fights ${this.activeVillain().description} ${
-          this.activeVillain().name
-        }`
-    );
+    this.actionDesc = computed(() => {
+      const injured = this.activeHero().isInjured ? 'Injured ' : '';
+      return `${injured}${this.activeHero().name} fights ${this.activeVillain().description} ${
+        this.activeVillain().name
+      }`;
+    });
     this.robinAndCatwoman = computed(() => {
-      if (
-        this.activeHero().name === 'Robin' &&
-        this.activeVillain().name === 'Catwoman'
-      ) {
+      if (this.activeHero().name === 'Robin' && this.activeVillain().name === 'Catwoman') {
         return '(Whoa! Did you see how Robin looks at Catwoman!?)';
       }
       return '';
     });
+    // this.activeHero.update((h) => {
+    //   h.isInjured = true;
+    //   return h;
+    // });
   }
 
   get heroNames(): string[] {
@@ -73,18 +64,14 @@ export class AppComponent {
     if (!this.heroNames.find((n) => n === heroName)) {
       return false;
     }
-    return !!this.heroes.find(
-      (h) => h.name === heroName && h.currentlyFightsVillain
-    );
+    return !!this.heroes.find((h) => h.name === heroName && h.currentlyFightsVillain);
   }
 
   villainBtnDisabled(villainName: string): boolean {
     if (!this.villainNames.find((v) => v === villainName)) {
       return false;
     }
-    return !!this.villains.find(
-      (v) => v.name === villainName && v.currentlyFightsHero
-    );
+    return !!this.villains.find((v) => v.name === villainName && v.currentlyFightsHero);
   }
 
   setHero(heroName: string) {
@@ -99,6 +86,7 @@ export class AppComponent {
       .filter((h) => h.name === heroName)
       .map((h) => {
         h.currentlyFightsVillain = true;
+        h.name === 'Robin' && (h.isInjured = true);
         return h;
       })
       .reduce((_acc, curr) => curr, {} as Hero);

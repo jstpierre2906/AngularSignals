@@ -1,6 +1,10 @@
 const heroNames = ['Batman', 'Robin'] as const;
 type HeroName = (typeof heroNames)[number];
-export type Hero = { name: HeroName; currentlyFightsVillain: boolean };
+export type Hero = {
+  name: HeroName;
+  currentlyFightsVillain: boolean;
+  isInjured: boolean;
+};
 
 const villainNames = ['Joker', 'Penguin', 'Catwoman'] as const;
 type VillainName = (typeof villainNames)[number];
